@@ -2,6 +2,7 @@ require 'codes/version'
 require 'codes/dependency_checker'
 require 'codes/codes_runner'
 require 'codes/itunes_connect'
+require 'codes/hash_drop'
 
 require 'fastlane_core'
 
