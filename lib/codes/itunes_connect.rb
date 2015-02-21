@@ -37,7 +37,7 @@ module FastlaneCore
 
       codes = download_codes download_url
       
-      bytes_written = File.write output_file_path, codes, mode: "a"
+      bytes_written = File.write output_file_path, codes, mode: "a+"
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
 
       Helper.log.info "Your codes were downloaded succesfully! Here they are:"
