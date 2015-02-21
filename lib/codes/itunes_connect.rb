@@ -33,7 +33,8 @@ module FastlaneCore
       wait_for_elements("input[type=checkbox]").first.click
       click_next
 
-      download_url = wait_for_elements("a > img").first.find(:xpath, '..')['href']
+      # the find(:xpath, "..") gets the parent element of the previous expression
+      download_url = wait_for_elements("a > img").first.find(:xpath, '..')['href'] 
 
 
       codes = download_codes download_url
