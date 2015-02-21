@@ -23,17 +23,19 @@ class CodesApplication
 
     global_option '-u', '--username STRING', 'Your iTunes Connect username'
     global_option '-a', '--app_identifier STRING', 'The bundle ID to download promo codes for'
+    global_option '-i', '--apple_id STRING', 'The App ID to download promo codes for'
 
     command :download do |c|
       c.when_called do |args, options|
           user = username options
           number_of_codes = count args
           app_identifier = bundle_id options
+          apple_id = apple_id options
 
           raise "Could not find your user in one of the valid configuration options" unless user
-          raise "Could not find your App's bundle ID in one of the valid configuration options" unless app_identifier
+          raise "Could not find your App's bundle ID or App ID in one of the valid configuration options" unless app_identifier or apple_id
 
-          Codes::CodesRunner.run number_of_codes: number_of_codes, app_identifier: app_identifier
+          Codes::CodesRunner.run number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id
       end
     end
 
@@ -55,8 +57,14 @@ class CodesApplication
 
     def bundle_id(options)
       app_identifier = options.app_identifier
-      app_identifier ||= ENV["CODES_APP_ID"]
+      app_identifier ||= ENV["CODES_APP_IDENTIFIER"]
       app_identifier ||= CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    end
+
+    def apple_id(options)
+      apple_id = options.apple_id
+      apple_id ||= ENV["CODES_APPLE_ID"]
+      apple_id ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
     end
 
     run!
