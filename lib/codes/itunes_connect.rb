@@ -8,14 +8,13 @@ module FastlaneCore
     PROMO_URL = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId="
 
     def run args
-      app_identifier = args[:app_identifier]
       number_of_codes = args[:number_of_codes]
 
       raise "Please specify a number > 0 for the number of codes to download!" if number_of_codes <= 0
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
-      Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes} for app #{app_identifier}..." if number_of_codes == 1
+      Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." if number_of_codes == 1
 
-      app = Deliver::App.new app_identifier: app_identifier
+      app = Deliver::App.new args.drop(:number_of_codes)
       Helper.log.debug "Found App: #{app.to_s}"
 
       output_file_path = File.join(Dir.getwd, "codes.txt")
