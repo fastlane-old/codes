@@ -28,11 +28,11 @@ codes - Download promo codes from iTunes Connect
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/KrauseFx/cert/blob/master/LICENSE)
 [![Gem](https://img.shields.io/gem/v/codes.svg?style=flat)](http://rubygems.org/gems/codes)
 
-###### Automagically generate new Promo codes for your Apps
+###### Automatically lose money by giving away your app for free... seriously
 
 ##### This tool was sponsored by Max Bäumle and Alexander Blach
 
-Get in contact with the developer on Twitter: [@KrauseFx](https://twitter.com/KrauseFx)
+Get in contact with one of the developers on Twitter: [@KrauseFx](https://twitter.com/KrauseFx), [@acrooow](https://twitter.com/acrooow)
 
 -------
 <p align="center">
