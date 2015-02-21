@@ -18,6 +18,10 @@ module FastlaneCore
       app = Deliver::App.new app_identifier: app_identifier
       Helper.log.debug "Found App: #{app.to_s}"
 
+      output_file_path = File.join(Dir.getwd, "codes.txt")
+      raise "Insufficient permissions to write to codes.txt file".red unless File.writable? output_file_path
+      FileUtils.touch output_file_path
+
       visit PROMO_URL << app.apple_id.to_s
 
       text_fields = wait_for_elements "input[type=text]"
@@ -31,9 +35,6 @@ module FastlaneCore
 
       download_url = wait_for_elements("a > img").first.find(:xpath, '..')['href']
 
-      output_file_path = File.join(Dir.getwd, "codes.txt")
-      FileUtils.touch output_file_path
-      raise "Insufficient permissions to write to codes.txt file" unless File.writable? output_file_path
 
       codes = download_codes download_url
       
