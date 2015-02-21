@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+
+$:.push File.expand_path("../../lib", __FILE__)
+
+require 'codes'
+require 'commander'
+require 'credentials_manager/appfile_config'
+
+HighLine.track_eof = false
+
+class CodesApplication
+  include Commander::Methods
+
+  def run
+    program :version, Codes::VERSION
+    program :description, 'CLI for \'codes\' - Download promo codes for your App'
+    program :help, 'Author', 'Felix Krause <codes@krausefx.com>'
+    program :help, 'Website', 'http://fastlane.tools'
+    program :help, 'GitHub', 'https://github.com/krausefx/codes'
+    program :help_formatter, :compact
+
+    always_trace!
+
+    global_option '-u', '--username STRING', 'Your iTunes Connect username'
+    global_option '-a', '--app_identifier STRING', 'The bundle ID to download promo codes for'
+
+    command :download do |c|
+      c.when_called do |args, options|
+          user = username options
+          number_of_codes = count args
+          app_identifier = bundle_id options
+
+          puts "User: #{user}"
+          puts "Count: #{number_of_codes}"
+          puts "Bundle ID: #{app_identifier}"
+
+          raise "Could not find your user in one of the valid configuration options" unless user
+          raise "Could not find your App's bundle ID in one of the valid configuration options" unless app_identifier
+
+          Codes::CodesRunner.run user: user, number_of_codes: number_of_codes, app_identifier: app_identifier
+      end
+    end
+
+    default_command :download
+
+    def count(args)
+      Integer(args[0]) rescue 1 #Convert args[0] to int if possible, else use default of 1 1 
+    end
+
+    def username(options)
+      user = options.username
+      user ||= ENV["CODES_USERNAME"]
+      user ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
+      
+      CredentialsManager::PasswordManager.shared_manager(user) if user
+
+      user
+    end
+
+    def bundle_id(options)
+      app_identifier = options.app_identifier
+      app_identifier ||= ENV["CODES_APP_ID"]
+      app_identifier ||= CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    end
+
+    run!
+  end
+end
+
+CodesApplication.new.run
