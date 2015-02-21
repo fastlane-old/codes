@@ -39,7 +39,6 @@ Get in contact with the developer on Twitter: [@KrauseFx](https://twitter.com/Kr
     <a href="#installation">Installation</a> &bull; 
     <a href="#why">Why?</a> &bull; 
     <a href="#usage">Usage</a> &bull; 
-    <a href="#how-does-it-work">How does it work?</a> &bull; 
     <a href="#tips">Tips</a> &bull; 
     <a href="#need-help">Need help?</a>
 </p>
@@ -53,10 +52,6 @@ Get in contact with the developer on Twitter: [@KrauseFx](https://twitter.com/Kr
 # Installation
     sudo gem install codes
 
-Make sure, you have the latest version of the Xcode command line tools installed:
-
-    xcode-select --install
-
 # Why?
 
 This tool is aimed as a working replacement for the itc.cli promo codes functionality. 
@@ -64,7 +59,7 @@ This tool is aimed as a working replacement for the itc.cli promo codes function
 
 # Usage
 
-    code [num] [-a app_identifier] 
+    code [num] [-a app_identifier] [-u user_name] [-i app_id]
 
 e.g. 
 
@@ -78,6 +73,8 @@ By default, if you don't specify any other options, `code` will generate a singl
 In case you prefer environment variables:
 
 - ```CODES_USERNAME``` - Your iTunes Connect username
+- ```CODES_APP_IDENTIFIER``` - Your App's Bundle ID
+- ```CODES_APPLE_ID```- Your App's internal iTunes Connect ID
 
 # Tips
 
