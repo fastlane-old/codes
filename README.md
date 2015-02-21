@@ -12,7 +12,7 @@
   <a href="https://github.com/KrauseFx/pem">PEM</a> &bull; 
   <a href="https://github.com/KrauseFx/sigh">sigh</a> &bull; 
   <a href="https://github.com/KrauseFx/produce">produce</a> &bull;
-  <a href="https://github.com/KrauseFx/cert">produce</a> &bull;
+  <a href="https://github.com/KrauseFx/cert">cert</a> &bull;
   <b>codes</b>
 </p>
 -------
