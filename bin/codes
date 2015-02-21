@@ -30,14 +30,10 @@ class CodesApplication
           number_of_codes = count args
           app_identifier = bundle_id options
 
-          puts "User: #{user}"
-          puts "Count: #{number_of_codes}"
-          puts "Bundle ID: #{app_identifier}"
-
           raise "Could not find your user in one of the valid configuration options" unless user
           raise "Could not find your App's bundle ID in one of the valid configuration options" unless app_identifier
 
-          Codes::CodesRunner.run user: user, number_of_codes: number_of_codes, app_identifier: app_identifier
+          Codes::CodesRunner.run number_of_codes: number_of_codes, app_identifier: app_identifier
       end
     end
 
