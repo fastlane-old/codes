@@ -19,8 +19,7 @@ module FastlaneCore
       Helper.log.debug "Found App: #{app.to_s}"
 
       output_file_path = File.join(Dir.getwd, "codes.txt")
-      raise "Insufficient permissions to write to codes.txt file".red unless File.writable? output_file_path
-      FileUtils.touch output_file_path
+      raise "Insufficient permissions to write to codes.txt file".red if File.exists? output_file_path and not File.writable? output_file_path
 
       visit PROMO_URL << app.apple_id.to_s
 
