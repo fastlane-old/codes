@@ -64,7 +64,6 @@ class CodesApplication
     def apple_id(options)
       apple_id = options.apple_id
       apple_id ||= ENV["CODES_APPLE_ID"]
-      apple_id ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
     end
 
     run!
