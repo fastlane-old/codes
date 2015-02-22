@@ -65,7 +65,7 @@ Get in contact with the developers of `codes` on Twitter: [@KrauseFx](https://tw
 
 All parameters are optional.
 
-`code` will print out the promo codes and store them in a file called `codes.txt` in the current directory.
+`code` will print out the promo codes and store them in a file called `codes_[your app identifier].txt` in the current directory.
 
 Example:
 
