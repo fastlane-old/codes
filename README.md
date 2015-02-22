@@ -33,7 +33,7 @@ or
 ###### Automatically lose money by giving away your app for free...
 
 
-##### This tool was sponsored by Max Bäumle and Alexander Blach
+##### This tool was sponsored by [Max Bäumle](http://maxbaeumle.com) and [Textastic Code Editor](http://www.textasticapp.com)
 
 Get in contact with the developers of `codes` on Twitter: [@KrauseFx](https://twitter.com/KrauseFx), [@acrooow](https://twitter.com/acrooow)
 
