@@ -10,22 +10,22 @@ module FastlaneCore
     def run(args)
       number_of_codes = args[:number_of_codes]
 
-      raise "Please specify a number > 0 for the number of codes to download!" if number_of_codes <= 0
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
       Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." if number_of_codes == 1
 
-      app = Deliver::App.new args.drop(:number_of_codes)
+      app = Deliver::App.new(args.drop(:number_of_codes))
       Helper.log.debug "Found App: #{app.to_s}"
 
-      output_file_path = File.join(Dir.getwd, "codes.txt")
-      raise "Insufficient permissions to write to codes.txt file".red if File.exists? output_file_path and not File.writable? output_file_path
+      file_name = ["codes", args[:app_identifier]].join("_") + ".txt"
+      output_file_path = File.join(Dir.getwd, file_name)
+      raise "Insufficient permissions to write to codes.txt file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
 
       visit PROMO_URL << app.apple_id.to_s
 
       text_fields = wait_for_elements "input[type=text]"
       raise "There should only be a single text input field to specify the number of codes".red unless text_fields.count == 1
 
-      text_fields.first.set number_of_codes.to_s
+      text_fields.first.set(number_of_codes.to_s)
       click_next
       Helper.log.debug "Accepting the App Store Volume Custom Code Agreement"
       wait_for_elements("input[type=checkbox]").first.click
@@ -39,8 +39,9 @@ module FastlaneCore
       
       bytes_written = File.write(output_file_path, codes, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
+      Helper.log.info "Added generated codes to '#{output_file_path}'".green unless  bytes_written == 0
 
-      Helper.log.info "Your codes were downloaded succesfully:"
+      Helper.log.info "Your codes were succesfully downloaded:".green
       puts codes
     end
 

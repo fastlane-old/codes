@@ -13,7 +13,7 @@ class CodesApplication
 
   def run
     program :version, Codes::VERSION
-    program :description, 'CLI for \'codes\' - Download promo codes for your App'
+    program :description, 'CLI for \'codes\' - Create promo codes for iOS Apps using the command line'
     program :help, 'Author', 'Felix Krause <codes@krausefx.com>'
     program :help, 'Website', 'http://fastlane.tools'
     program :help, 'GitHub', 'https://github.com/krausefx/codes'
@@ -26,29 +26,27 @@ class CodesApplication
     global_option '-i', '--apple_id STRING', 'The App ID to download promo codes for'
 
     command :download do |c|
-      c.when_called do |args, options|
+      c.action do |args, options|
           user = username options
-          number_of_codes = count args
-          app_identifier = bundle_id options
-          apple_id = apple_id options
+          number_of_codes = count(args)
+          app_identifier = bundle_id(options)
+          apple_id = apple_id(options)
 
-          raise "Could not find your user in one of the valid configuration options" unless user
-          raise "Could not find your App's bundle ID or App ID in one of the valid configuration options" unless app_identifier or apple_id
-
-          Codes::CodesRunner.run number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id
+          Codes::CodesRunner.run(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id)
       end
     end
 
     default_command :download
 
     def count(args)
-      Integer(args[0]) rescue 1 #Convert args[0] to int if possible, else use default of 1 1 
+      [args[0].to_i, 1].max # minimum of 1 code
     end
 
     def username(options)
       user = options.username
       user ||= ENV["CODES_USERNAME"]
       user ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
+
       
       CredentialsManager::PasswordManager.shared_manager(user) if user
 
@@ -59,6 +57,8 @@ class CodesApplication
       app_identifier = options.app_identifier
       app_identifier ||= ENV["CODES_APP_IDENTIFIER"]
       app_identifier ||= CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+      app_identifier ||= ask("App Identifier (Bundle ID, e.g. com.krausefx.app): ")
+      app_identifier
     end
 
     def apple_id(options)
