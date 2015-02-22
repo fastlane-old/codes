@@ -35,7 +35,7 @@ or
 
 ##### This tool was sponsored by Max Bäumle and Alexander Blach
 
-Get in contact with one of the developers on Twitter: [@KrauseFx](https://twitter.com/KrauseFx), [@acrooow](https://twitter.com/acrooow)
+Get in contact with the developers of `code` on Twitter: [@KrauseFx](https://twitter.com/KrauseFx), [@acrooow](https://twitter.com/acrooow)
 
 -------
 <p align="center">
