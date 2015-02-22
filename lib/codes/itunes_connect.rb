@@ -1,4 +1,5 @@
 require 'fastlane_core/itunes_connect/itunes_connect'
+require 'deliver'
 require 'deliver/app'
 
 module FastlaneCore
