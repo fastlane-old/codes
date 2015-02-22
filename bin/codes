@@ -28,6 +28,9 @@ class CodesApplication
 
 
     command :download do |c|
+      c.syntax = "cert download [num]"
+      c.description = "Download [num] new promo codes from iTunes Connect"
+
       c.action do |args, options|
           user = username options
           number_of_codes = count(args)
