@@ -61,11 +61,11 @@ Get in contact with the developers of `codes` on Twitter: [@KrauseFx](https://tw
 
 # Usage
 
-    code [num] [-a app_identifier] [-u user_name] [-i app_id]
+    code [num] [-a app_identifier] [-u user_name] [-i app_id] [-o output_file]
 
 All parameters are optional.
 
-`code` will print out the promo codes and store them in a file called `codes_[your app identifier].txt` in the current directory.
+`code` will print out the promo codes and store them in a file called `codes_[your app identifier].txt` in the current directory by default.
 
 Example:
 
