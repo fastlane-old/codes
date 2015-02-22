@@ -19,10 +19,10 @@ module FastlaneCore
       end
       Helper.log.debug "Found App: #{app.to_s}"
 
+      # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
       output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
       output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app.app_identifier}_codes.txt"))
       raise "Insufficient permissions to write to output file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
-
       visit PROMO_URL << app.apple_id.to_s
 
       text_fields = wait_for_elements "input[type=text]"
