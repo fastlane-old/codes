@@ -11,7 +11,7 @@ module FastlaneCore
       number_of_codes = args[:number_of_codes]
 
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
-      Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." if number_of_codes == 1
+      Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." 
 
 
       app_id = args[:apple_id]
