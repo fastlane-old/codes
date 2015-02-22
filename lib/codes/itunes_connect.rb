@@ -13,13 +13,13 @@ module FastlaneCore
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
       Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." if number_of_codes == 1
 
-      app = Deliver::App.new(args.keep_if {|key| [:app_identifier, :apple_id].include? key})
+      app = Deliver::App.new(args.select {|key| [:app_identifier, :apple_id].include?(key)})
       unless app.apple_id.to_i > 0
         raise "Could not find app using the following information: #{args.drop(:number_of_codes)}. Maybe the app is not in the store, or is available on a different account?".red
       end
       Helper.log.debug "Found App: #{app.to_s}"
 
-      output_file_path = Pathname.new(args[:output_file_path]).absolute? if candidate_path
+      output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
       output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app.app_identifier}_codes.txt"))
       raise "Insufficient permissions to write to output file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
 
