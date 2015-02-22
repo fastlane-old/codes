@@ -43,6 +43,7 @@ Get in contact with the developers of `codes` on Twitter: [@KrauseFx](https://tw
     <a href="#why">Why?</a> &bull; 
     <a href="#usage">Usage</a> &bull; 
     <a href="#tips">Tips</a> &bull; 
+    <a href="#considerations">Considerations</a> &bull; 
     <a href="#need-help">Need help?</a>
 </p>
 
@@ -94,6 +95,9 @@ In case you prefer environment variables:
 - [`sigh`](https://github.com/KrauseFx/sigh): Because you would rather spend your time building stuff than fighting provisioning
 - [`produce`](https://github.com/KrauseFx/produce): Create new iOS apps on iTunes Connect and Dev Portal using the command line
 - [`cert`](https://github.com/KrauseFx/cert): Create new iOS signing certificates
+
+# Considerations
+As part of the process of downloading promo codes from iTunes Connect, the user would normally have to accept a contract every single time. Since there is no way to check with iTunes if this contract was accepted manually before, `codes` agrees to this contract automatically. Before using `codes` for the first time, we advise you to go to iTunes Connect and go through the process of creating promo codes manually at least once and to read the contract when it comes up.
 
 # Need help?
 - If there is a technical problem with ```codes```, submit an issue.
