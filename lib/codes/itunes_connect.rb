@@ -14,6 +14,9 @@ module FastlaneCore
       Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." if number_of_codes == 1
 
       app = Deliver::App.new(args.drop(:number_of_codes))
+      unless app.apple_id.to_i > 0
+        raise "Could not find app using the following information: #{args.drop(:number_of_codes)}. Maybe the app is not in the store, or is available on a different account?".red
+      end
       Helper.log.debug "Found App: #{app.to_s}"
 
       file_name = ["codes", args[:app_identifier]].join("_") + ".txt"
