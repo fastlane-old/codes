@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'fastlane_core' # all shared code and dependencies
-  spec.add_dependency 'deliver' #Needed for iTunes Search API
+  spec.add_dependency 'deliver' # needed for iTunes Search API
 
   # Development only
   spec.add_development_dependency 'bundler'

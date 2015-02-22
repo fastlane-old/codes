@@ -7,7 +7,7 @@ module FastlaneCore
 
     PROMO_URL = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId="
 
-    def run args
+    def run(args)
       number_of_codes = args[:number_of_codes]
 
       raise "Please specify a number > 0 for the number of codes to download!" if number_of_codes <= 0
@@ -37,10 +37,10 @@ module FastlaneCore
 
       codes = download_codes download_url
       
-      bytes_written = File.write output_file_path, codes, mode: "a+"
+      bytes_written = File.write(output_file_path, codes, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
 
-      Helper.log.info "Your codes were downloaded succesfully! Here they are:"
+      Helper.log.info "Your codes were downloaded succesfully:"
       puts codes
     end
 
@@ -48,9 +48,9 @@ module FastlaneCore
       wait_for_elements("input.continueActionButton").first.click
     end
 
-    def download_codes url
+    def download_codes(url)
       host = Capybara.current_session.current_host
-      url = URI.join host, url
+      url = URI.join(host, url)
       Helper.log.debug "Downloading promo code file from #{url}"
 
       cookie_string = ""
