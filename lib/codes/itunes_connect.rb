@@ -13,15 +13,15 @@ module FastlaneCore
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
       Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." if number_of_codes == 1
 
-      app = Deliver::App.new(args.drop(:number_of_codes))
+      app = Deliver::App.new(args.keep_if {|key| [:app_identifier, :apple_id].include? key})
       unless app.apple_id.to_i > 0
         raise "Could not find app using the following information: #{args.drop(:number_of_codes)}. Maybe the app is not in the store, or is available on a different account?".red
       end
       Helper.log.debug "Found App: #{app.to_s}"
 
-      file_name = ["codes", args[:app_identifier]].join("_") + ".txt"
-      output_file_path = File.join(Dir.getwd, file_name)
-      raise "Insufficient permissions to write to codes.txt file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
+      output_file_path = Pathname.new(args[:output_file_path]).absolute? if candidate_path
+      output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app.app_identifier}_codes.txt"))
+      raise "Insufficient permissions to write to output file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
 
       visit PROMO_URL << app.apple_id.to_s
 
@@ -40,9 +40,9 @@ module FastlaneCore
 
       codes = download_codes download_url
       
-      bytes_written = File.write(output_file_path, codes, mode: "a+")
+      bytes_written = File.write(output_file_path.to_s, codes, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
-      Helper.log.info "Added generated codes to '#{output_file_path}'".green unless  bytes_written == 0
+      Helper.log.info "Added generated codes to '#{output_file_path.to_s}'".green unless  bytes_written == 0
 
       Helper.log.info "Your codes were succesfully downloaded:".green
       puts codes

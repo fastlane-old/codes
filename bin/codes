@@ -24,6 +24,8 @@ class CodesApplication
     global_option '-u', '--username STRING', 'Your iTunes Connect username'
     global_option '-a', '--app_identifier STRING', 'The bundle ID to download promo codes for'
     global_option '-i', '--apple_id STRING', 'The App ID to download promo codes for'
+    global_option '-o', '--output_file STRING', 'The name of the file that should be written to disk. If the file exists, the new codes will be appended.'
+
 
     command :download do |c|
       c.action do |args, options|
@@ -32,7 +34,7 @@ class CodesApplication
           app_identifier = bundle_id(options)
           apple_id = apple_id(options)
 
-          Codes::CodesRunner.run(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id)
+          Codes::CodesRunner.run(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file)
       end
     end
 
