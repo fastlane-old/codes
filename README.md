@@ -21,14 +21,17 @@
     <img src="assets/codes.png">
 </p>
 
-codes - Download promo codes from iTunes Connect
+codes
 ============
 
 [![Twitter: @KauseFx](https://img.shields.io/badge/contact-@KrauseFx-blue.svg?style=flat)](https://twitter.com/KrauseFx)
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/KrauseFx/cert/blob/master/LICENSE)
 [![Gem](https://img.shields.io/gem/v/codes.svg?style=flat)](http://rubygems.org/gems/codes)
 
-###### Automatically lose money by giving away your app for free... seriously
+###### Create promo codes for iOS Apps using the command line
+or
+###### Automatically lose money by giving away your app for free...
+
 
 ##### This tool was sponsored by Max Bäumle and Alexander Blach
 
@@ -54,27 +57,30 @@ Get in contact with one of the developers on Twitter: [@KrauseFx](https://twitte
 
 # Why?
 
-This tool is aimed as a working replacement for the itc.cli promo codes functionality. 
-`codes` can help you automate sending promo codes to journalists, create promo codes for tons of apps with the press of a button, and much more!
+`codes` can help you automate sending promo codes to journalists and create promo codes for tons of apps with the press of a button.
 
 # Usage
 
     code [num] [-a app_identifier] [-u user_name] [-i app_id]
 
-e.g. 
+All parameters are optional.
+
+`code` will print out the promo codes and store them in a file called `codes.txt` in the current directory.
+
+Example:
 
     code 3 -a com.example.myApp
 
-Will generate 3 promo codes for the the App with the Bundle Identifier "com.example.myApp". 
-By default, if you don't specify any other options, `code` will generate a single promo code and print it on the command line.
+Will generate 3 promo codes for the the App with the Bundle Identifier `com.example.myApp`. 
 
+If you don't pass any paramaters, `code` will generate a single promo code and print it on the command line.
 
 ## Environment Variables
 In case you prefer environment variables:
 
-- ```CODES_USERNAME``` - Your iTunes Connect username
-- ```CODES_APP_IDENTIFIER``` - Your App's Bundle ID
-- ```CODES_APPLE_ID```- Your App's internal iTunes Connect ID
+- ```CODES_USERNAME``` (Your iTunes Connect username)
+- ```CODES_APP_IDENTIFIER``` (Your App's Bundle ID)
+- ```CODES_APPLE_ID```(Your App's internal iTunes Connect App ID)
 
 # Tips
 
