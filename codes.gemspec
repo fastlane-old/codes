@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Codes::VERSION
   spec.authors       = ["Felix Krause"]
   spec.email         = ["codes@krausefx.com"]
-  spec.summary       = %q{Download promo codes from iTunes Connect}
-  spec.description   = %q{Download promo codes from iTunes Connect}
+  spec.summary       = %q{Create promo codes for iOS Apps using the command line}
+  spec.description   = %q{Create promo codes for iOS Apps using the command line}
   spec.homepage      = "http://fastlane.tools"
 
   spec.license       = "MIT"
