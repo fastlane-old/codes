@@ -76,6 +76,8 @@ Will generate 3 promo codes for the the App with the Bundle Identifier `com.exam
 
 If you don't pass any paramaters, `code` will generate a single promo code and print it on the command line.
 
+##### [Get informed about new fastlane tools and features](https://tinyletter.com/krausefx)
+
 ## Environment Variables
 In case you prefer environment variables:
 
@@ -95,6 +97,8 @@ In case you prefer environment variables:
 - [`sigh`](https://github.com/KrauseFx/sigh): Because you would rather spend your time building stuff than fighting provisioning
 - [`produce`](https://github.com/KrauseFx/produce): Create new iOS apps on iTunes Connect and Dev Portal using the command line
 - [`cert`](https://github.com/KrauseFx/cert): Create new iOS signing certificates
+
+##### [Get informed about new fastlane tools and features](https://tinyletter.com/krausefx)
 
 # Considerations
 As part of the process of downloading promo codes from iTunes Connect, the user would normally have to accept a contract every single time. Since there is no way to check with iTunes if this contract was accepted manually before, `codes` agrees to this contract automatically. Before using `codes` for the first time, we advise you to go to iTunes Connect and go through the process of creating promo codes manually at least once and to read the contract when it comes up.
