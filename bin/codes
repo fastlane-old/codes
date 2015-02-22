@@ -5,6 +5,7 @@ $:.push File.expand_path("../../lib", __FILE__)
 require 'codes'
 require 'commander'
 require 'credentials_manager/appfile_config'
+require 'fastlane_core'
 
 HighLine.track_eof = false
 
@@ -34,8 +35,8 @@ class CodesApplication
       c.action do |args, options|
           user = username options
           number_of_codes = count(args)
-          app_identifier = bundle_id(options)
           apple_id = apple_id(options)
+          app_identifier = bundle_id(options, apple_id)
 
           Codes::CodesRunner.run(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file)
       end
@@ -58,17 +59,18 @@ class CodesApplication
       user
     end
 
-    def bundle_id(options)
+    def bundle_id(options, apple_id)
       app_identifier = options.app_identifier
       app_identifier ||= ENV["CODES_APP_IDENTIFIER"]
       app_identifier ||= CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+      app_identifier ||= (FastlaneCore::ItunesSearchApi.fetch(apple_id)['bundleId'] rescue nil) if apple_id
       app_identifier ||= ask("App Identifier (Bundle ID, e.g. com.krausefx.app): ")
       app_identifier
     end
 
     def apple_id(options)
       apple_id = options.apple_id
-      apple_id ||= ENV["CODES_APPLE_ID"]
+      apple_id ||= ENV["CODES_APP_ID"]
     end
 
     run!

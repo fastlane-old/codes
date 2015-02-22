@@ -13,19 +13,27 @@ module FastlaneCore
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
       Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." if number_of_codes == 1
 
-      app = Deliver::App.new(args.select {|key| [:app_identifier, :apple_id].include?(key)})
-      unless app.apple_id.to_i > 0
-        raise "Could not find app using the following information: #{args.drop(:number_of_codes)}. Maybe the app is not in the store, or is available on a different account?".red
+
+      app_id = args[:apple_id]
+      app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(args[:app_identifier])['trackId'] rescue nil)
+
+      app_identifier = args[:app_identifier]
+
+      if app_id.to_i == 0 or app_identifier.to_s.length == 0
+        raise "Could not find app using the following information: #{args}. Maybe the app is not in the store. Pass the Apple ID of the app as well!".red
       end
-      Helper.log.debug "Found App: #{app.to_s}"
 
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
       output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
-      output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app.app_identifier}_codes.txt"))
+      output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app_identifier || app_id}_codes.txt"))
       raise "Insufficient permissions to write to output file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
-      visit PROMO_URL << app.apple_id.to_s
+      visit PROMO_URL << app_id.to_s
 
-      text_fields = wait_for_elements "input[type=text]"
+      begin
+        text_fields = wait_for_elements("input[type=text]")
+      rescue
+        raise "Could not open details page for app #{app_identifier}. Are you sure you are using the correct apple account and have access to this app?".red
+      end
       raise "There should only be a single text input field to specify the number of codes".red unless text_fields.count == 1
 
       text_fields.first.set(number_of_codes.to_s)
@@ -36,7 +44,6 @@ module FastlaneCore
 
       # the find(:xpath, "..") gets the parent element of the previous expression
       download_url = wait_for_elements("a > img").first.find(:xpath, '..')['href'] 
-
 
       codes = download_codes download_url
       

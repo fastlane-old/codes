@@ -81,7 +81,7 @@ In case you prefer environment variables:
 
 - ```CODES_USERNAME``` (Your iTunes Connect username)
 - ```CODES_APP_IDENTIFIER``` (Your App's Bundle ID)
-- ```CODES_APPLE_ID```(Your App's internal iTunes Connect App ID)
+- ```CODES_APP_ID```(Your App's internal iTunes Connect App ID)
 
 # Tips
 
