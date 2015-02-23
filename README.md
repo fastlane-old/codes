@@ -56,6 +56,10 @@ Get in contact with the developers of `codes` on Twitter: [@KrauseFx](https://tw
 # Installation
     sudo gem install codes
 
+Make sure, you have the latest version of the Xcode command line tools installed:
+
+    xcode-select --install
+
 # Why?
 
 `codes` can help you automate sending promo codes to journalists and create promo codes for tons of apps with the press of a button.
@@ -75,6 +79,8 @@ Example:
 Will generate 3 promo codes for the the App with the Bundle Identifier `com.example.myApp`. 
 
 If you don't pass any paramaters, `code` will generate a single promo code and print it on the command line.
+
+![assets/codes.gif](assets/codes.gif)
 
 ##### [Like this tool? Be the first to know about updates and new fastlane tools](https://tinyletter.com/krausefx)
 
