@@ -66,19 +66,19 @@ Make sure, you have the latest version of the Xcode command line tools installed
 
 # Usage
 
-    code [num] [-a app_identifier] [-u user_name] [-i app_id] [-o output_file]
+    codes [num] [-a app_identifier] [-u user_name] [-i app_id] [-o output_file]
 
 All parameters are optional.
 
-`code` will print out the promo codes and store them in a file called `codes_[your app identifier].txt` in the current directory by default.
+`codes` will print out the promo codes and store them in a file called `codes_[your app identifier].txt` in the current directory by default.
 
 Example:
 
-    code 3 -a com.example.myApp
+    codes 3 -a com.example.myApp
 
 Will generate 3 promo codes for the the App with the Bundle Identifier `com.example.myApp`. 
 
-If you don't pass any paramaters, `code` will generate a single promo code and print it on the command line.
+If you don't pass any paramaters, `codes` will generate a single promo code and print it on the command line.
 
 ![assets/codes.gif](assets/codes.gif)
 
