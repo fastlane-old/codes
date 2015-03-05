@@ -1,7 +1,7 @@
 require 'fastlane_core/itunes_connect/itunes_connect'
 
-module FastlaneCore
-  class ItunesConnect
+module Codes
+  class ItunesConnect < FastlaneCore::ItunesConnect
 
     PROMO_URL = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId="
 
