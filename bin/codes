@@ -16,7 +16,7 @@ class CodesApplication
     program :version, Codes::VERSION
     program :description, 'CLI for \'codes\' - Create promo codes for iOS Apps using the command line'
     program :help, 'Author', 'Felix Krause <codes@krausefx.com>'
-    program :help, 'Website', 'http://fastlane.tools'
+    program :help, 'Website', 'https://fastlane.tools'
     program :help, 'GitHub', 'https://github.com/krausefx/codes'
     program :help_formatter, :compact
 

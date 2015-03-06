@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["codes@krausefx.com"]
   spec.summary       = %q{Create promo codes for iOS Apps using the command line}
   spec.description   = %q{Create promo codes for iOS Apps using the command line}
-  spec.homepage      = "http://fastlane.tools"
+  spec.homepage      = "https://fastlane.tools"
 
   spec.license       = "MIT"
 
