@@ -49,7 +49,7 @@ module Codes
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
       Helper.log.info "Added generated codes to '#{output_file_path.to_s}'".green unless  bytes_written == 0
 
-      Helper.log.info "Your codes were succesfully downloaded:".green
+      Helper.log.info "Your codes were successfully downloaded:".green
       puts codes
     end
 
