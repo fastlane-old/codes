@@ -3,7 +3,7 @@ require 'fastlane_core/itunes_connect/itunes_connect'
 module Codes
   class ItunesConnect < FastlaneCore::ItunesConnect
 
-    PROMO_URL = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId="
+    PROMO_URL = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId=[[app_id]]&platform=[[platform]]"
 
     def run(args)
       number_of_codes = args[:number_of_codes]
@@ -21,11 +21,14 @@ module Codes
         raise "Could not find app using the following information: #{args}. Maybe the app is not in the store. Pass the Apple ID of the app as well!".red
       end
 
+      app = FastlaneCore::ItunesSearchApi.fetch(app_id)
+      platform = (app['kind'] == "mac-software" ? "osx" : "ios")
+
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
       output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
       output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app_identifier || app_id}_codes.txt"))
       raise "Insufficient permissions to write to output file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
-      visit PROMO_URL << app_id.to_s
+      visit PROMO_URL.gsub("[[app_id]]", app_id.to_s).gsub("[[platform]]", platform)
 
       begin
         text_fields = wait_for_elements("input[type=text]")
