@@ -80,6 +80,12 @@ Will generate 3 promo codes for the the App with the Bundle Identifier `com.exam
 
 If you don't pass any paramaters, `codes` will generate a single promo code and print it on the command line.
 
+## Generate URLs
+
+    codes 5 --urls
+
+If specified, includes a full URL for each code that can be used to redeem that code.
+
 ![assets/codes.gif](assets/codes.gif)
 
 ##### [Like this tool? Be the first to know about updates and new fastlane tools](https://tinyletter.com/krausefx)
