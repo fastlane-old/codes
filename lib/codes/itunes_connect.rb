@@ -50,9 +50,10 @@ module Codes
       codes = download_codes download_url
       
       if args[:urls]
-          codes = codes.split("\n").map { |code|
+          codes = codes.split("\n").map do |code|
               code +" - "+ CODE_URL.gsub("[[code]]", code)
-          }.join("\n") + "\n"
+          end
+          codes = codes.join("\n") + "\n"
       end
 
       bytes_written = File.write(output_file_path.to_s, codes, mode: "a+")
