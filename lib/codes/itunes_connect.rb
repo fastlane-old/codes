@@ -4,6 +4,7 @@ module Codes
   class ItunesConnect < FastlaneCore::ItunesConnect
 
     PROMO_URL = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId=[[app_id]]&platform=[[platform]]"
+    CODE_URL = "https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/redeemLandingPage?code=[[code]]"
 
     def run(args)
       number_of_codes = args[:number_of_codes]
@@ -48,6 +49,12 @@ module Codes
 
       codes = download_codes download_url
       
+      if args[:urls]
+          codes = codes.split("\n").map { |code|
+              code +" - "+ CODE_URL.gsub("[[code]]", code)
+          }.join("\n") + "\n"
+      end
+
       bytes_written = File.write(output_file_path.to_s, codes, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
       Helper.log.info "Added generated codes to '#{output_file_path.to_s}'".green unless  bytes_written == 0
