@@ -62,7 +62,7 @@ module Codes
     end
 
     def download_format(codes, format, app)
-        format=format.gsub(/%([a-z])/, "%{\\1}") # %c => %{c}
+        format = format.gsub(/%([a-z])/, "%{\\1}") # %c => %{c}
 
         codes = codes.split("\n").map do |code|
             format % {
@@ -109,9 +109,9 @@ module Codes
       end
       raise "There should only be a single text input field to specify the number of codes".red unless text_fields.count == 1
 
-      remaining_divs=wait_for_elements("div#codes_0")
+      remaining_divs = wait_for_elements("div#codes_0")
       raise "There should only be a single text div containing the number of remaining codes".red unless remaining_divs.count == 1
-      remaining=remaining_divs.first.text.split(" ")[0]
+      remaining = remaining_divs.first.text.split(" ")[0]
 
       bytes_written = File.write(output_file_path.to_s, remaining, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes_info.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
