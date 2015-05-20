@@ -41,7 +41,7 @@ class CodesApplication
           app_identifier = bundle_id(options, apple_id)
           urls = options.x || options.urls
 
-          Codes::CodesRunner.run(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, urls: urls, country: options.country)
+          Codes::CodesRunner.download(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, urls: urls, country: options.country)
       end
     end
 

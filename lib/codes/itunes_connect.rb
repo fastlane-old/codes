@@ -6,7 +6,7 @@ module Codes
     PROMO_URL = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId=[[app_id]]&platform=[[platform]]"
     CODE_URL = "https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/redeemLandingPage?code=[[code]]"
 
-    def run(args)
+    def download(args)
       number_of_codes = args[:number_of_codes]
       country = args[:country]
 
