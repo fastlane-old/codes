@@ -24,7 +24,7 @@ module Codes
       end
 
       app = FastlaneCore::ItunesSearchApi.fetch(app_id, country)
-      platform = (app['kind'] == "mac-software" ? "osx" : "ios")
+      platform = app_platform app
 
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
       output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
@@ -50,12 +50,8 @@ module Codes
 
       codes = download_codes download_url
       
-      if args[:urls]
-          codes = codes.split("\n").map do |code|
-              code +" - "+ CODE_URL.gsub("[[code]]", code)
-          end
-          codes = codes.join("\n") + "\n"
-      end
+      format = args[:format]
+      codes = download_format(codes, format, app) if format
 
       bytes_written = File.write(output_file_path.to_s, codes, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
@@ -63,6 +59,26 @@ module Codes
 
       Helper.log.info "Your codes were successfully downloaded:".green
       puts codes
+    end
+
+    def download_format(codes, format, app)
+        format=format.gsub(/%([a-z])/, "%{\\1}") # %c => %{c}
+
+        codes = codes.split("\n").map do |code|
+            format % {
+              c: code,
+              b: app['bundleId'],
+              i: app['trackId'],
+              n: "\'#{app['trackName']}\'",
+              p: app_platform(app),
+              u: CODE_URL.gsub("[[code]]", code)
+            }
+        end
+        codes = codes.join("\n") + "\n"
+    end
+
+    def app_platform(app)
+      app['kind'] == "mac-software" ? "osx" : "ios"
     end
 
     def display(args)
