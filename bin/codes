@@ -13,7 +13,7 @@ class CodesApplication
   include Commander::Methods
 
   def download_verbose_format
-    '%c,%p,%i,%b,%n,%u'
+    '%c,%d,%p,%i,%b,%n,%u'
   end
 
   def run

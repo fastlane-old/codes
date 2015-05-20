@@ -48,26 +48,27 @@ module Codes
       # the find(:xpath, "..") gets the parent element of the previous expression
       download_url = wait_for_elements("div[class='large-blue-rect-button']").first.find(:xpath, '..')['href']
 
-      codes = download_codes download_url
+      codes, request_date = download_codes(download_url)
       
       format = args[:format]
-      codes = download_format(codes, format, app) if format
+      codes = download_format(codes, format, request_date, app) if format
 
       bytes_written = File.write(output_file_path.to_s, codes, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
       Helper.log.info "Added generated codes to '#{output_file_path.to_s}'".green unless  bytes_written == 0
 
-      Helper.log.info "Your codes were successfully downloaded:".green
+      Helper.log.info "Your codes (requested #{request_date}) were successfully downloaded:".green
       puts codes
     end
 
-    def download_format(codes, format, app)
+    def download_format(codes, format, request_date, app)
         format = format.gsub(/%([a-z])/, "%{\\1}") # %c => %{c}
 
         codes = codes.split("\n").map do |code|
             format % {
               c: code,
               b: app['bundleId'],
+              d: request_date, # e.g. 20150520110716 / Cupertino timestamp...
               i: app['trackId'],
               n: "\'#{app['trackName']}\'",
               p: app_platform(app),
@@ -134,8 +135,11 @@ module Codes
         cookie_string << "#{cookie.name}=#{cookie.value};"
       end
 
-      open(url, "Cookie" => cookie_string).read
-    end
+      page = open(url, "Cookie" => cookie_string)
+      request_date = page.metas['content-disposition'][0].gsub(/.*filename=.*_(.*).txt/,"\\1")
+      codes = page.read
 
+      return codes, request_date
+    end
   end
 end
