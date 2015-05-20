@@ -45,6 +45,18 @@ class CodesApplication
       end
     end
 
+    command :display do |c|
+      c.syntax = "codes display"
+      c.description = "Display remaining number of promo codes from iTunes Connect"
+
+      c.action do |args, options|
+          user = username options
+          apple_id = apple_id(options)
+          app_identifier = bundle_id(options, apple_id)
+
+          Codes::CodesRunner.display(app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file)
+      end
+    end
     default_command :download
 
     def count(args)
