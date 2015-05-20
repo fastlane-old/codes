@@ -94,7 +94,7 @@ module Codes
       end
 
       app = FastlaneCore::ItunesSearchApi.fetch(app_id)
-      platform = (app['kind'] == "mac-software" ? "osx" : "ios")
+      platform = app_platform app
 
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
       output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
