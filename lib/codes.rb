@@ -8,6 +8,5 @@ require 'fastlane_core'
 module Codes
   Helper = FastlaneCore::Helper 
 
-  FastlaneCore::UpdateChecker.verify_latest_version('codes', Codes::VERSION)
   DependencyChecker.check_dependencies
 end

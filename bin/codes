@@ -79,4 +79,10 @@ class CodesApplication
   end
 end
 
-CodesApplication.new.run
+
+begin
+  FastlaneCore::UpdateChecker.start_looking_for_update('codes')
+  PemApplication.new.run
+ensure
+  FastlaneCore::UpdateChecker.show_update_status('codes', Codes::VERSION)
+end
