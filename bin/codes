@@ -82,7 +82,7 @@ end
 
 begin
   FastlaneCore::UpdateChecker.start_looking_for_update('codes')
-  PemApplication.new.run
+  CodesApplication.new.run
 ensure
   FastlaneCore::UpdateChecker.show_update_status('codes', Codes::VERSION)
 end
