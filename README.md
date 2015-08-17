@@ -16,7 +16,8 @@
   <b>codes</b> &bull;
   <a href="https://github.com/fastlane/spaceship">spaceship</a> &bull;
   <a href="https://github.com/fastlane/pilot">pilot</a> &bull;
-  <a href="https://github.com/fastlane/boarding">boarding</a>
+  <a href="https://github.com/fastlane/boarding">boarding</a> &bull;
+  <a href="https://github.com/fastlane/gym">gym</a>
 </p>
 -------
 
@@ -114,7 +115,8 @@ In case you prefer environment variables:
 - [`cert`](https://github.com/KrauseFx/cert): Create new iOS signing certificates
 - [`spaceship`](https://github.com/fastlane/spaceship): Ruby library to access the Apple Dev Center and iTunes Connect
 - [`pilot`](https://github.com/fastlane/pilot): The best way to manage your TestFlight testers and builds from your terminal
-- [`boarding`](https://github.com/fastlane/boarding): The easiest way to invite your TestFlight beta testers 
+- [`boarding`](https://github.com/fastlane/boarding): The easiest way to invite your TestFlight beta testers
+- [`gym`](https://github.com/fastlane/gym): Building your iOS apps has never been easier
 
 ##### [Like this tool? Be the first to know about updates and new fastlane tools](https://tinyletter.com/krausefx)
 
@@ -128,12 +130,3 @@ Please submit an issue here on GitHub
 This project is licensed under the terms of the MIT license. See the LICENSE file.
 
 > This project and all fastlane tools are in no way affiliated with Apple Inc. This project is open source under the MIT license, which means you have full access to the source code and can modify it to fit your own needs. All fastlane tools run on your own computer or server, so your credentials or other sensitive information will never leave your own computer. You are responsible for how you use fastlane tools.
-
-# Contributing
-
-1. Create an issue to discuss about your idea
-2. Fork it (https://github.com/KrauseFx/codes/fork)
-3. Create your feature branch (`git checkout -b my-new-feature`)
-4. Commit your changes (`git commit -am 'Add some feature'`)
-5. Push to the branch (`git push origin my-new-feature`)
-6. Create a new Pull Request
