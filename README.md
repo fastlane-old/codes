@@ -124,7 +124,7 @@ In case you prefer environment variables:
 As part of the process of downloading promo codes from iTunes Connect, the user would normally have to accept a contract every single time. Since there is no way to check with iTunes if this contract was accepted manually before, `codes` agrees to this contract automatically. Before using `codes` for the first time, we advise you to go to iTunes Connect and go through the process of creating promo codes manually at least once and to read the contract when it comes up.
 
 # Need help?
-Please submit an issue here on GitHub
+Please submit an issue on GitHub and provide information about your setup
 
 # License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
