@@ -45,7 +45,7 @@ module Codes
       click_next
 
       # the find(:xpath, "..") gets the parent element of the previous expression
-      download_url = wait_for_elements("a > img").first.find(:xpath, '..')['href'] 
+      download_url = wait_for_elements("div[class='large-blue-rect-button']").first.find(:xpath, '..')['href']
 
       codes = download_codes download_url
       
