@@ -8,13 +8,14 @@ module Codes
 
     def run(args)
       number_of_codes = args[:number_of_codes]
+      country = args[:country]
 
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
       Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." 
 
 
       app_id = args[:apple_id]
-      app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(args[:app_identifier])['trackId'] rescue nil)
+      app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(args[:app_identifier], country)['trackId'] rescue nil)
 
       app_identifier = args[:app_identifier]
 
@@ -22,7 +23,7 @@ module Codes
         raise "Could not find app using the following information: #{args}. Maybe the app is not in the store. Pass the Apple ID of the app as well!".red
       end
 
-      app = FastlaneCore::ItunesSearchApi.fetch(app_id)
+      app = FastlaneCore::ItunesSearchApi.fetch(app_id, country)
       platform = (app['kind'] == "mac-software" ? "osx" : "ios")
 
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
