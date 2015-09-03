@@ -94,7 +94,7 @@ module Codes
 
       bytes_written = File.write(output_file_path.to_s, remaining, mode: "a+")
       Helper.log.warn "Could not write your codes to the codes_info.txt file, but you can still access them from iTunes Connect later" if bytes_written == 0
-      Helper.log.info "Added generated codes to '#{output_file_path.to_s}'".green unless  bytes_written == 0
+      Helper.log.info "Added information of quantity of remaining codes to '#{output_file_path.to_s}'".green unless  bytes_written == 0
 
       puts remaining
     end
