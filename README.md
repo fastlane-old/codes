@@ -70,7 +70,7 @@ Make sure, you have the latest version of the Xcode command line tools installed
 
 # Usage
 
-    codes [num] [-a app_identifier] [-u user_name] [-i app_id] [-o output_file] [-X] [-f format]
+    codes [num] [-a app_identifier] [-u user_name] [-i app_id] [-o output_file] [-c country] [-X] [-f format]
 
 All parameters are optional.
 
