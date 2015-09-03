@@ -70,7 +70,7 @@ Make sure, you have the latest version of the Xcode command line tools installed
 
 # Usage
 
-    codes [num] [-a app_identifier] [-u user_name] [-i app_id] [-o output_file]
+    codes [num] [-a app_identifier] [-u user_name] [-i app_id] [-o output_file] [-c country] [-X] [-f format]
 
 All parameters are optional.
 
@@ -83,6 +83,24 @@ Example:
 Will generate 3 promo codes for the the App with the Bundle Identifier `com.example.myApp`. 
 
 If you don't pass any paramaters, `codes` will generate a single promo code and print it on the command line.
+
+## Display extra information
+
+Use the ```--format FORMAT``` argument to control the displayed information. The ```--verbose``` argument displays all information and maps to
+
+    --format '%c,%d,%p,%i,%b,%n,%u'
+
+E.g.
+
+    codes --verbose
+
+will display
+
+    NRTFXP3XXXXX,20150520110716,ios,522069155,com.wewanttoknow.DragonBoxPlus,'DragonBox Algebra 5+',https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/redeemLandingPage?code=NRTFXP3XXXXX
+
+For example, if you want a custom URL, you could use something like
+
+    codes --format '%c: http://yoursite.com/redeem/%c'
 
 ## Generate URLs
 

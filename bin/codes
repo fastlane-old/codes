@@ -12,6 +12,10 @@ HighLine.track_eof = false
 class CodesApplication
   include Commander::Methods
 
+  def download_verbose_format
+    '%c,%d,%p,%i,%b,%n,%u'
+  end
+
   def run
     program :version, Codes::VERSION
     program :description, 'CLI for \'codes\' - Create promo codes for iOS Apps using the command line'
@@ -27,6 +31,8 @@ class CodesApplication
     global_option '-a', '--app_identifier STRING', 'The bundle ID to download promo codes for'
     global_option '-i', '--apple_id STRING', 'The App ID to download promo codes for'
     global_option '-o', '--output_file STRING', 'The name of the file that should be written to disk. If the file exists, the new codes will be appended.'
+    global_option '-f', '--format STRING', 'If specified, modifies the format of the output to the specified format'
+    global_option '-X', '--verbose', "If specified, defines the default output. Similar to -f \'#{download_verbose_format}\'"
     global_option '-x', '--urls', 'If specified, includes a full URL for each code that can be used to redeem that code.'
 
 
@@ -39,12 +45,24 @@ class CodesApplication
           number_of_codes = count(args)
           apple_id = apple_id(options)
           app_identifier = bundle_id(options, apple_id)
-          urls = options.x || options.urls
+          format = download_format options
 
-          Codes::CodesRunner.run(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, urls: urls, country: options.country)
+          Codes::CodesRunner.download(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, format: format, country: options.country)
       end
     end
 
+    command :display do |c|
+      c.syntax = "codes display"
+      c.description = "Display remaining number of promo codes from iTunes Connect"
+
+      c.action do |args, options|
+          user = username options
+          apple_id = apple_id(options)
+          app_identifier = bundle_id(options, apple_id)
+
+          Codes::CodesRunner.display(app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, country: options.country)
+      end
+    end
     default_command :download
 
     def count(args)
@@ -60,6 +78,20 @@ class CodesApplication
       CredentialsManager::PasswordManager.shared_manager(user) if user
 
       user
+    end
+
+    def download_format(options)
+      verbose = options.X || options.verbose
+      urls = options.x || options.urls
+      format = options.f || options.format
+      # backward compatibility...
+      if urls && !format
+        format = "%c - %u"
+      end
+      if verbose && !format
+        format = download_verbose_format
+      end
+      format
     end
 
     def bundle_id(options, apple_id)
