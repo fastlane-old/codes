@@ -29,6 +29,15 @@ module Codes
 
       text_fields.first.set(number_of_codes.to_s)
       click_next
+
+      # are there any errors ?
+      errors = []
+      begin
+         errors = wait_for_elements("div[id=LCPurpleSoftwarePageWrapperErrorMessage]")
+      rescue Exception
+      end
+      raise errors.first.text.red unless errors.count == 0
+
       Helper.log.debug "Accepting the App Store Volume Custom Code Agreement"
       wait_for_elements("input[type=checkbox]").first.click
       click_next
