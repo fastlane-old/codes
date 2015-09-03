@@ -60,7 +60,7 @@ class CodesApplication
           apple_id = apple_id(options)
           app_identifier = bundle_id(options, apple_id)
 
-          Codes::CodesRunner.display(app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file)
+          Codes::CodesRunner.display(app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, country: options.country)
       end
     end
     default_command :download

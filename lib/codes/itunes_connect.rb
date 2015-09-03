@@ -84,9 +84,10 @@ module Codes
 
     def display(args)
       Helper.log.info "Displaying remaining number of codes promo"
+      country = args[:country]
 
       app_id = args[:apple_id]
-      app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(args[:app_identifier])['trackId'] rescue nil)
+      app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(args[:app_identifier], country)['trackId'] rescue nil)
 
       app_identifier = args[:app_identifier]
 
@@ -94,7 +95,7 @@ module Codes
         raise "Could not find app using the following information: #{args}. Maybe the app is not in the store. Pass the Apple ID of the app as well!".red
       end
 
-      app = FastlaneCore::ItunesSearchApi.fetch(app_id)
+      app = FastlaneCore::ItunesSearchApi.fetch(app_id, country)
       platform = app_platform app
 
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
