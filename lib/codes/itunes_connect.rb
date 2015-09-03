@@ -8,34 +8,22 @@ module Codes
 
     def download(args)
       number_of_codes = args[:number_of_codes]
-      country = args[:country]
 
       code_or_codes = number_of_codes == 1 ? "code" : "codes"
       Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." 
 
-
-      app_id = args[:apple_id]
-      app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(args[:app_identifier], country)['trackId'] rescue nil)
-
-      app_identifier = args[:app_identifier]
-
-      if app_id.to_i == 0 or app_identifier.to_s.length == 0
-        raise "Could not find app using the following information: #{args}. Maybe the app is not in the store. Pass the Apple ID of the app as well!".red
-      end
-
-      app = FastlaneCore::ItunesSearchApi.fetch(app_id, country)
-      platform = app_platform app
+      fetch_app_data args
 
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
       output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
-      output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app_identifier || app_id}_codes.txt"))
+      output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{@app_identifier || @app_id}_codes.txt"))
       raise "Insufficient permissions to write to output file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
-      visit PROMO_URL.gsub("[[app_id]]", app_id.to_s).gsub("[[platform]]", platform)
+      visit PROMO_URL.gsub("[[app_id]]", @app_id.to_s).gsub("[[platform]]", @platform)
 
       begin
         text_fields = wait_for_elements("input[type=text]")
       rescue
-        raise "Could not open details page for app #{app_identifier}. Are you sure you are using the correct apple account and have access to this app?".red
+        raise "Could not open details page for app #{@app_identifier}. Are you sure you are using the correct apple account and have access to this app?".red
       end
       raise "There should only be a single text input field to specify the number of codes".red unless text_fields.count == 1
 
@@ -84,25 +72,14 @@ module Codes
 
     def display(args)
       Helper.log.info "Displaying remaining number of codes promo"
-      country = args[:country]
 
-      app_id = args[:apple_id]
-      app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(args[:app_identifier], country)['trackId'] rescue nil)
-
-      app_identifier = args[:app_identifier]
-
-      if app_id.to_i == 0 or app_identifier.to_s.length == 0
-        raise "Could not find app using the following information: #{args}. Maybe the app is not in the store. Pass the Apple ID of the app as well!".red
-      end
-
-      app = FastlaneCore::ItunesSearchApi.fetch(app_id, country)
-      platform = app_platform app
+      fetch_app_data args
 
       # Use Pathname because it correctly handles the distinction between relative paths vs. absolute paths
       output_file_path = Pathname.new(args[:output_file_path]) if args[:output_file_path]
-      output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{app_identifier || app_id}_codes_info.txt"))
+      output_file_path ||= Pathname.new(File.join(Dir.getwd, "#{@app_identifier || @app_id}_codes_info.txt"))
       raise "Insufficient permissions to write to output file".red if File.exists?(output_file_path) and not File.writable?(output_file_path)
-      visit PROMO_URL.gsub("[[app_id]]", app_id.to_s).gsub("[[platform]]", platform)
+      visit PROMO_URL.gsub("[[app_id]]", @app_id.to_s).gsub("[[platform]]", @platform)
 
       begin
         text_fields = wait_for_elements("input[type=text]")
@@ -141,6 +118,23 @@ module Codes
       codes = page.read
 
       return codes, request_date
+    end
+
+    private
+
+    def fetch_app_data(args)
+      @country = args[:country]
+      @app_identifier = args[:app_identifier]
+
+      @app_id = args[:apple_id]
+      @app_id ||= (FastlaneCore::ItunesSearchApi.fetch_by_identifier(@app_identifier, @country)['trackId'] rescue nil)
+
+      if @app_id.to_i == 0 or @app_identifier.to_s.length == 0
+        raise "Could not find app using the following information: #{args}. Maybe the app is not in the store. Pass the Apple ID of the app as well!".red
+      end
+
+      app = FastlaneCore::ItunesSearchApi.fetch(@app_id, @country)
+      @platform = app_platform app
     end
   end
 end
