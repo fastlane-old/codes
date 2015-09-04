@@ -33,7 +33,7 @@ module Codes
       errors = []
       begin
         errors = wait_for_elements('div[id=LCPurpleSoftwarePageWrapperErrorMessage]')
-      rescue Exception
+      rescue
       end
       fail errors.first.text.red unless errors.count == 0
 
