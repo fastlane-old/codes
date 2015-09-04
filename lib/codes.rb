@@ -6,7 +6,7 @@ require 'codes/itunes_connect'
 require 'fastlane_core'
 
 module Codes
-  Helper = FastlaneCore::Helper 
+  Helper = FastlaneCore::Helper
 
   DependencyChecker.check_dependencies
 end

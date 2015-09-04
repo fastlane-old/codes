@@ -57,7 +57,6 @@ class CodesApplication
       user ||= ENV['CODES_USERNAME']
       user ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
 
-      
       CredentialsManager::PasswordManager.shared_manager(user) if user
 
       user

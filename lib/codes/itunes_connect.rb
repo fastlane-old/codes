@@ -9,7 +9,7 @@ module Codes
       number_of_codes = args[:number_of_codes]
 
       code_or_codes = number_of_codes == 1 ? 'code' : 'codes'
-      Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..." 
+      Helper.log.info "Downloading #{number_of_codes} promo #{code_or_codes}..."
 
       fetch_app_data args
 
@@ -45,7 +45,7 @@ module Codes
       download_url = wait_for_elements("div[class='large-blue-rect-button']").first.find(:xpath, '..')['href']
 
       codes, request_date = download_codes(download_url)
-      
+
       format = args[:format]
       codes = download_format(codes, format, request_date, app) if format
 
