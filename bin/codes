@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-$:.push File.expand_path("../../lib", __FILE__)
+$:.push File.expand_path('../../lib', __FILE__)
 
 require 'codes'
 require 'commander'
@@ -20,30 +20,30 @@ class CodesApplication
     prepare_command
 
     command :download do |c|
-      c.syntax = "codes download [num]"
-      c.description = "Download [num] new promo codes from iTunes Connect"
+      c.syntax = 'codes download [num]'
+      c.description = 'Download [num] new promo codes from iTunes Connect'
 
       c.action do |args, options|
-          username options
-          number_of_codes = count(args)
-          apple_id = apple_id(options)
-          app_identifier = bundle_id(options, apple_id)
-          format = download_format options
+        username options
+        number_of_codes = count(args)
+        apple_id = apple_id(options)
+        app_identifier = bundle_id(options, apple_id)
+        format = download_format options
 
-          Codes::CodesRunner.download(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, format: format, country: options.country)
+        Codes::CodesRunner.download(number_of_codes: number_of_codes, app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, format: format, country: options.country)
       end
     end
 
     command :display do |c|
-      c.syntax = "codes display"
-      c.description = "Display remaining number of promo codes from iTunes Connect"
+      c.syntax = 'codes display'
+      c.description = 'Display remaining number of promo codes from iTunes Connect'
 
       c.action do |args, options|
-          username options
-          apple_id = apple_id(options)
-          app_identifier = bundle_id(options, apple_id)
+        username options
+        apple_id = apple_id(options)
+        app_identifier = bundle_id(options, apple_id)
 
-          Codes::CodesRunner.display(app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, country: options.country)
+        Codes::CodesRunner.display(app_identifier: app_identifier, apple_id: apple_id, output_file_path: options.output_file, country: options.country)
       end
     end
     default_command :download
@@ -54,7 +54,7 @@ class CodesApplication
 
     def username(options)
       user = options.username
-      user ||= ENV["CODES_USERNAME"]
+      user ||= ENV['CODES_USERNAME']
       user ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
 
       
@@ -68,27 +68,23 @@ class CodesApplication
       urls = options.x || options.urls
       format = options.f || options.format
       # backward compatibility...
-      if urls && !format
-        format = "%c - %u"
-      end
-      if verbose && !format
-        format = download_verbose_format
-      end
+      format = '%c - %u' if urls && !format
+      format = download_verbose_format if verbose && !format
       format
     end
 
     def bundle_id(options, apple_id)
       app_identifier = options.app_identifier
-      app_identifier ||= ENV["CODES_APP_IDENTIFIER"]
+      app_identifier ||= ENV['CODES_APP_IDENTIFIER']
       app_identifier ||= CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
       app_identifier ||= (FastlaneCore::ItunesSearchApi.fetch(apple_id)['bundleId'] rescue nil) if apple_id
-      app_identifier ||= ask("App Identifier (Bundle ID, e.g. com.krausefx.app): ")
+      app_identifier ||= ask('App Identifier (Bundle ID, e.g. com.krausefx.app): ')
       app_identifier
     end
 
     def apple_id(options)
       apple_id = options.apple_id
-      apple_id ||= ENV["CODES_APP_ID"]
+      apple_id ||= ENV['CODES_APP_ID']
       apple_id
     end
 
@@ -117,7 +113,6 @@ class CodesApplication
     global_option '-x', '--urls', 'If specified, includes a full URL for each code that can be used to redeem that code.'
   end
 end
-
 
 begin
   FastlaneCore::UpdateChecker.start_looking_for_update('codes')
