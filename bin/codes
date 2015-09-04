@@ -48,45 +48,6 @@ class CodesApplication
     end
     default_command :download
 
-    def count(args)
-      [args[0].to_i, 1].max # minimum of 1 code
-    end
-
-    def username(options)
-      user = options.username
-      user ||= ENV['CODES_USERNAME']
-      user ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
-
-      CredentialsManager::PasswordManager.shared_manager(user) if user
-
-      user
-    end
-
-    def download_format(options)
-      verbose = options.X || options.verbose
-      urls = options.x || options.urls
-      format = options.f || options.format
-      # backward compatibility...
-      format = '%c - %u' if urls && !format
-      format = download_verbose_format if verbose && !format
-      format
-    end
-
-    def bundle_id(options, apple_id)
-      app_identifier = options.app_identifier
-      app_identifier ||= ENV['CODES_APP_IDENTIFIER']
-      app_identifier ||= CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-      app_identifier ||= (FastlaneCore::ItunesSearchApi.fetch(apple_id)['bundleId'] rescue nil) if apple_id
-      app_identifier ||= ask('App Identifier (Bundle ID, e.g. com.krausefx.app): ')
-      app_identifier
-    end
-
-    def apple_id(options)
-      apple_id = options.apple_id
-      apple_id ||= ENV['CODES_APP_ID']
-      apple_id
-    end
-
     run!
   end
 
@@ -110,6 +71,45 @@ class CodesApplication
     global_option '-f', '--format STRING', 'If specified, modifies the format of the output to the specified format'
     global_option '-X', '--verbose', "If specified, defines the default output. Similar to -f \'#{download_verbose_format}\'"
     global_option '-x', '--urls', 'If specified, includes a full URL for each code that can be used to redeem that code.'
+  end
+
+  def count(args)
+    [args[0].to_i, 1].max # minimum of 1 code
+  end
+
+  def username(options)
+    user = options.username
+    user ||= ENV['CODES_USERNAME']
+    user ||= CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
+
+    CredentialsManager::PasswordManager.shared_manager(user) if user
+
+    user
+  end
+
+  def download_format(options)
+    verbose = options.X || options.verbose
+    urls = options.x || options.urls
+    format = options.f || options.format
+    # backward compatibility...
+    format = '%c - %u' if urls && !format
+    format = download_verbose_format if verbose && !format
+    format
+  end
+
+  def bundle_id(options, apple_id)
+    app_identifier = options.app_identifier
+    app_identifier ||= ENV['CODES_APP_IDENTIFIER']
+    app_identifier ||= CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    app_identifier ||= (FastlaneCore::ItunesSearchApi.fetch(apple_id)['bundleId'] rescue nil) if apple_id
+    app_identifier ||= ask('App Identifier (Bundle ID, e.g. com.krausefx.app): ')
+    app_identifier
+  end
+
+  def apple_id(options)
+    apple_id = options.apple_id
+    apple_id ||= ENV['CODES_APP_ID']
+    apple_id
   end
 end
 
