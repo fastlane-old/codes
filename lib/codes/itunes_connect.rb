@@ -5,6 +5,7 @@ module Codes
     PROMO_URL = 'https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/wa/LCAppPage/viewPromoCodes?adamId=[[app_id]]&platform=[[platform]]'
     CODE_URL = 'https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/redeemLandingPage?code=[[code]]'
 
+    # rubocop:disable Metrics/AbcSize
     def download(args)
       number_of_codes = args[:number_of_codes]
 
@@ -56,6 +57,7 @@ module Codes
       Helper.log.info "Your codes (requested #{request_date}) were successfully downloaded:".green
       puts codes
     end
+    # rubocop:enable Metrics/AbcSize
 
     def download_format(codes, format, request_date, app)
       format = format.gsub(/%([a-z])/, '%{\\1}') # %c => %{c}
