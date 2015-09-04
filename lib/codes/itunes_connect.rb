@@ -72,7 +72,7 @@ module Codes
               u: CODE_URL.gsub("[[code]]", code)
             }
         end
-        codes = codes.join("\n") + "\n"
+        codes.join("\n") + "\n"
     end
 
     def app_platform(app)

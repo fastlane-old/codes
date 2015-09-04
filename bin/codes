@@ -17,31 +17,14 @@ class CodesApplication
   end
 
   def run
-    program :version, Codes::VERSION
-    program :description, 'CLI for \'codes\' - Create promo codes for iOS Apps using the command line'
-    program :help, 'Author', 'Felix Krause <codes@krausefx.com>'
-    program :help, 'Website', 'https://fastlane.tools'
-    program :help, 'GitHub', 'https://github.com/krausefx/codes'
-    program :help_formatter, :compact
-
-    always_trace!
-
-    global_option '-u', '--username STRING', 'Your iTunes Connect username'
-    global_option '-c', '--country STRING', 'The country the app can be found in'
-    global_option '-a', '--app_identifier STRING', 'The bundle ID to download promo codes for'
-    global_option '-i', '--apple_id STRING', 'The App ID to download promo codes for'
-    global_option '-o', '--output_file STRING', 'The name of the file that should be written to disk. If the file exists, the new codes will be appended.'
-    global_option '-f', '--format STRING', 'If specified, modifies the format of the output to the specified format'
-    global_option '-X', '--verbose', "If specified, defines the default output. Similar to -f \'#{download_verbose_format}\'"
-    global_option '-x', '--urls', 'If specified, includes a full URL for each code that can be used to redeem that code.'
-
+    prepare_command
 
     command :download do |c|
       c.syntax = "codes download [num]"
       c.description = "Download [num] new promo codes from iTunes Connect"
 
       c.action do |args, options|
-          user = username options
+          username options
           number_of_codes = count(args)
           apple_id = apple_id(options)
           app_identifier = bundle_id(options, apple_id)
@@ -56,7 +39,7 @@ class CodesApplication
       c.description = "Display remaining number of promo codes from iTunes Connect"
 
       c.action do |args, options|
-          user = username options
+          username options
           apple_id = apple_id(options)
           app_identifier = bundle_id(options, apple_id)
 
@@ -106,9 +89,32 @@ class CodesApplication
     def apple_id(options)
       apple_id = options.apple_id
       apple_id ||= ENV["CODES_APP_ID"]
+      apple_id
     end
 
     run!
+  end
+
+  private
+
+  def prepare_command
+    program :version, Codes::VERSION
+    program :description, 'CLI for \'codes\' - Create promo codes for iOS Apps using the command line'
+    program :help, 'Author', 'Felix Krause <codes@krausefx.com>'
+    program :help, 'Website', 'https://fastlane.tools'
+    program :help, 'GitHub', 'https://github.com/krausefx/codes'
+    program :help_formatter, :compact
+
+    always_trace!
+
+    global_option '-u', '--username STRING', 'Your iTunes Connect username'
+    global_option '-c', '--country STRING', 'The country the app can be found in'
+    global_option '-a', '--app_identifier STRING', 'The bundle ID to download promo codes for'
+    global_option '-i', '--apple_id STRING', 'The App ID to download promo codes for'
+    global_option '-o', '--output_file STRING', 'The name of the file that should be written to disk. If the file exists, the new codes will be appended.'
+    global_option '-f', '--format STRING', 'If specified, modifies the format of the output to the specified format'
+    global_option '-X', '--verbose', "If specified, defines the default output. Similar to -f \'#{download_verbose_format}\'"
+    global_option '-x', '--urls', 'If specified, includes a full URL for each code that can be used to redeem that code.'
   end
 end
 
