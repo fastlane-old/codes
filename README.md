@@ -36,6 +36,8 @@ codes
 or
 ###### Automatically lose money by giving away your app for free...
 
+## This tool is not maintained any more
+
 
 ##### This tool was sponsored by [Max Bäumle](http://maxbaeumle.com) and [Textastic Code Editor](http://www.textasticapp.com)
 
