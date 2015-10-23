@@ -5,6 +5,11 @@
 
 inherit_from: .rubocop_general.yml
 
+AllCops:
+  Exclude:
+    # Legacy code that gets removed soon
+    - 'lib/codes/itunes_connect/*'
+
 Style/RescueModifier:
   Enabled: false
 

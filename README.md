@@ -22,7 +22,7 @@
 -------
 
 <p align="center">
-    <img src="assets/codes.png">
+  <img src="assets/codes.png" height="110">
 </p>
 
 codes
