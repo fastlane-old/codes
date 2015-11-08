@@ -2,12 +2,15 @@
 
 $:.push File.expand_path('../../lib', __FILE__)
 
-require 'codes'
-require 'commander'
-require 'credentials_manager/appfile_config'
+# require 'codes'
+# require 'commander'
+# require 'credentials_manager/appfile_config'
 require 'fastlane_core'
 
-HighLine.track_eof = false
+# HighLine.track_eof = false
+
+puts "This tool is currently not working due to the new iTunes Connect interface".red
+raise "Error"
 
 class CodesApplication
   include Commander::Methods
