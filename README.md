@@ -25,7 +25,7 @@
   <img src="assets/codes.png" height="110">
 </p>
 
-codes
+codes (Deprecated)
 ============
 
 [![Twitter: @KauseFx](https://img.shields.io/badge/contact-@KrauseFx-blue.svg?style=flat)](https://twitter.com/KrauseFx)
@@ -36,7 +36,7 @@ codes
 or
 ###### Automatically lose money by giving away your app for free...
 
-## This tool is not maintained any more
+## This tool is no longer maintained and does not work.
 
 
 ##### This tool was sponsored by [Max Bäumle](http://maxbaeumle.com) and [Textastic Code Editor](http://www.textasticapp.com)
