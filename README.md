@@ -82,7 +82,7 @@ Example:
 
     codes 3 -a com.example.myApp
 
-Will generate 3 promo codes for the the App with the Bundle Identifier `com.example.myApp`. 
+Will generate 3 promo codes for the App with the Bundle Identifier `com.example.myApp`. 
 
 If you don't pass any paramaters, `codes` will generate a single promo code and print it on the command line.
 
